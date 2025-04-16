@@ -66,6 +66,7 @@ class Query(graphene.ObjectType):
         user = info.context.user
         return Wallet.objects.get(id=id, user=user)
 
+    @permissions(is_logged)
     def resolve_wallets_total_balance(self, info):
         user = info.context.user
         total = Wallet.objects.filter(user=user).aggregate(total=models.Sum('balance'))['total'] or 0
