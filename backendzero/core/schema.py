@@ -23,9 +23,23 @@ class CreateTransactionMutation(DjangoCreateMutation):
         wallet = obj.wallet
         wallet.remove_amount(obj.amount)
 
+class CreateWalletMutation(DjangoCreateMutation):
+    class Meta:
+        model = Wallet
+        login_required = True
+        exclude_fields = 'user'
+
+    @classmethod
+    @permissions(is_logged)
+    def before_mutate(self, root, info, input):
+        user = info.context.user
+        input['user'] = user.id
+        return input
+
 
 class Mutation(graphene.ObjectType):
     create_transaction = CreateTransactionMutation.Field()
+    create_wallet = CreateWalletMutation.Field()
 
 
 class Query(graphene.ObjectType):
