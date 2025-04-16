@@ -23,8 +23,9 @@ class TestGetWallet(TestCase):
 
     def test_return_my_wallets(self):
         user = UserBuilder().build()
+        user2 = UserBuilder().build()
         wallet1 = WalletBuilder().with_name("Wallet di test").with_user(user).build()
-        wallet2 = WalletBuilder().with_name("Wallet di test2").build()
+        wallet2 = WalletBuilder().with_name("Wallet di test2").with_user(user2).build()
         query = '''
                     query {
                         wallets {
@@ -37,7 +38,6 @@ class TestGetWallet(TestCase):
                 '''
 
         response = GraphQLClient(schema).execute(query, user=user)
-        print(response)
         self.assertEqual(1, len(response['data']['wallets']))
         user_response = response['data']['wallets'][0]['user']
         self.assertEqual(str(user.id), user_response["id"])
