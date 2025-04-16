@@ -10,6 +10,11 @@ class WalletType(DjangoObjectType):
         model = Wallet
         fields = ['id', 'name', 'balance', 'user']
 
+class WalletsTotalBalanceType(graphene.ObjectType):
+    total_balance = graphene.Float()
+    user_id = graphene.Int()
+
+
 class UserType(DjangoObjectType):
     class Meta:
         model = User
