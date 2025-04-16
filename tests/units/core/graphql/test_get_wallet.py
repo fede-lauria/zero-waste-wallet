@@ -24,8 +24,8 @@ class TestGetWallet(TestCase):
     def test_return_my_wallets(self):
         user = UserBuilder().build()
         user2 = UserBuilder().build()
-        wallet1 = WalletBuilder().with_name("Wallet di test").with_user(user).build()
-        wallet2 = WalletBuilder().with_name("Wallet di test2").with_user(user2).build()
+        WalletBuilder().with_name("Wallet di test").with_user(user).build()
+        WalletBuilder().with_name("Wallet di test2").with_user(user2).build()
         query = '''
                     query {
                         wallets {
