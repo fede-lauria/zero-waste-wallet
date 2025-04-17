@@ -49,14 +49,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://562d-2a0e-41a-7ce4-0-5535-64e7-65e-ad83.ngrok-free.app',
-]
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
