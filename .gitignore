@@ -2,5 +2,4 @@
 __pycache__
 **/.DS_Store
 /.idea/**/*.xml
-backendzero/core/__pycache__
-backendzero/backendzero/__pycache__
+**/__pycache__
