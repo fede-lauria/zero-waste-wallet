@@ -34,6 +34,9 @@ INSTALLED_APPS = [
 
 GRAPHENE = {
     'SCHEMA': 'core.schema.schema',
+    'MIDDLEWARE': [
+        'backendzero.middleware.JwtGraphQl',
+    ]
 }
 
 AUTH_USER_MODEL = 'core.User'
@@ -51,17 +54,30 @@ MIDDLEWARE = [
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
 }
 
 ALLOWED_HOSTS = ['*']
+
+REST_AUTH = {
+    'USE_JWT': True,
+    'SESSION_LOGIN': False,
+    'TOKEN_MODEL': None,
+    'JWT_AUTH_HTTPONLY': False
+}
 
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
 ROOT_URLCONF = 'backendzero.urls'
@@ -82,7 +98,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backendzero.wsgi.application'
-
+INTERNAL_IPS = ['127.0.0.1']
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
