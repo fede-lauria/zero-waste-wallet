@@ -5,9 +5,9 @@ from django.db import models
 from graphene_django_cud.mutations import DjangoCreateMutation
 
 from core.mixins.auth_graphql import permissions, is_logged
-from core.models import Transaction
+from core.models import Transaction, Currency
 from core.models.wallet import Wallet
-from core.schema_type import WalletType, TransactionType, WalletsTotalBalanceType
+from core.schema_type import WalletType, TransactionType, WalletsTotalBalanceType, CurrencyType
 
 
 class CreateTransactionMutation(DjangoCreateMutation):
@@ -58,6 +58,7 @@ class Query(graphene.ObjectType):
     transactions = graphene.List(TransactionType)
     transaction = graphene.Field(TransactionType, id=graphene.Int())
     transactions_by_wallet = graphene.List(TransactionType, id=graphene.Int())
+    currency = graphene.List(CurrencyType)
 
     @permissions(is_logged)
     def resolve_wallets(self, info):
@@ -91,6 +92,11 @@ class Query(graphene.ObjectType):
     def resolve_transactions_by_wallet(self, info, id):
         user = info.context.user
         return Transaction.objects.filter(wallet=id, user=user)
+
+    @permissions(is_logged)
+    def resolve_currency(self, info):
+        return Currency.objects.all()
+
 
 
 
