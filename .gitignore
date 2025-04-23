@@ -1,5 +1,15 @@
-.idea
-__pycache__
-**/.DS_Store
+# PyCharm
+.idea/
 /.idea/**/*.xml
-**/__pycache__
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+
+# Sistemi operativi
+.DS_Store
+**/.DS_Store
