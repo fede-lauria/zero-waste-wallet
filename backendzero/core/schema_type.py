@@ -23,6 +23,6 @@ class UserType(DjangoObjectType):
 class TransactionType(DjangoObjectType):
     class Meta:
         model = Transaction
-        fields = ['id', 'text', 'amount', 'user', 'wallet', 'flow']
+        fields = ['id', 'text', 'amount', 'user', 'wallet', 'flow', 'day']
 
 
