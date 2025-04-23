@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Wallet, Transaction, User
+from core.models import Wallet, Transaction, User, Currency
 
 
 @admin.register(Wallet)
@@ -9,6 +9,10 @@ class WalletAdmin(admin.ModelAdmin):
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
     list_display = ('user', 'wallet', 'text', 'amount', )
+
+@admin.register(Currency)
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'symbol')
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
