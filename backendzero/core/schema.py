@@ -24,8 +24,13 @@ class CreateTransactionMutation(DjangoCreateMutation):
 
     @classmethod
     def after_mutate(cls, root, info, input, obj, return_data):
-        wallet = obj.wallet
-        wallet.remove_amount(obj.amount)
+        wallet = Wallet.objects.get(id=input['wallet'])
+        flow = input['flow']
+        if flow == 1:
+            wallet.add_amount(obj.amount)
+        else:
+            wallet.remove_amount(obj.amount)
+
 
 class CreateWalletMutation(DjangoCreateMutation):
     class Meta:

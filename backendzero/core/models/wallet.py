@@ -16,3 +16,8 @@ class Wallet(models.Model):
     def remove_amount(self, amount):
         self.balance -= amount
         self.save()
+
+    def add_amount(self, amount):
+        self.balance += amount
+        self.save()
+

@@ -26,6 +26,3 @@ class TransactionType(DjangoObjectType):
         fields = ['id', 'text', 'amount', 'user', 'wallet', 'flow']
 
 
-class FlowType(graphene.Enum):
-    inflow = 2
-    outflow = 1

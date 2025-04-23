@@ -10,15 +10,8 @@ from rest_framework.response import Response
 def protected_view(request):
     return Response({'message': f'Ciao {request.user.username}, sei autenticato!'})
 
-
-
-
-
 @api_view(['POST'])
 def register(request):
-    """
-    Registra un nuovo utente.
-    """
     if request.method == 'POST':
         username = request.data.get('username')
         password = request.data.get('password')
