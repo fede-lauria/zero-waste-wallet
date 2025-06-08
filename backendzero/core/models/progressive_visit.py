@@ -10,3 +10,10 @@ class ProgressiveVisit(models.Model):
     pay = models.BooleanField(default=False)
     weight = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     BMI = models.CharField(max_length=10, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.patient and self.date:
+            self.patient.last_appointment = self.date
+            self.patient.save(update_fields=['last_appointment'])
