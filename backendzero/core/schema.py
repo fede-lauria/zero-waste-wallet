@@ -86,6 +86,15 @@ class GetBmiMutation(graphene.Mutation):
             raise Exception("User not authorized")
         height = patient.height
 
+        if weight is None:
+            raise Exception("Weight is required")
+
+        if weight == 0:
+            raise Exception("Weight cannot be 0")
+
+        if height is None:
+            raise Exception("Height is required")
+
         bmi = round(weight / (float((height / 100 )) ** 2), 2)
 
         return GetBmiMutation(bmi=bmi)
