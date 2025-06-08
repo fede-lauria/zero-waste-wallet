@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Wallet, Transaction, User, Currency, Patients
+from core.models import Wallet, Transaction, User, Currency, Patients, ProgressiveVisit
 
 
 @admin.register(Wallet)
@@ -20,5 +20,9 @@ class UserAdmin(admin.ModelAdmin):
                     'date_joined']
 
 @admin.register(Patients)
-class UserAdmin(admin.ModelAdmin):
+class PatientsAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(ProgressiveVisit)
+class ProgressiveVisitAdmin(admin.ModelAdmin):
     pass
