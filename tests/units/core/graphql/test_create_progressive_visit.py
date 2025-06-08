@@ -79,6 +79,29 @@ class TestCreatePatientAPI(TestCase):
         self.assertNotIn('errors', response)
         self.assertEqual(response['data']['createProgressiveVisit']['progressiveVisit']['id'], '1')
 
+    def test_get_bmi(self):
+        user = UserBuilder().build()
+        patient = PatientsBuilder().with_height(173).with_user(user).build()
+        query = '''
+                    mutation getBmi(
+                      $patient: ID!,
+                      $weight: Float!,
+                    ) {
+                      getBmi(
+                          patient: $patient,
+                          weight: $weight
+                      ) {
+                        bmi
+                      }
+                    }'''
+
+        response = GraphQLClient(schema).execute(query, user, variables={
+            "patient": patient.id,
+            "weight": 88,
+        })
+        self.assertNotIn('errors', response)
+        self.assertEqual(response['data']['getBmi']['bmi'], 29.4)
+
 
 
 

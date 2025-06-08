@@ -17,11 +17,19 @@ class PatientsBuilder:
         self.next_appointment = date(2025, 7, 10)
         self.last_appointment = date.today()
         self.user = None
-        self.height = 1.75
+        self.height = 175
         self.weight = 88.00
 
     def with_user(self, user):
         self.user = user
+        return self
+
+    def with_height(self, height):
+        self.height = height
+        return self
+
+    def with_weight(self, weight):
+        self.weight = weight
         return self
 
     def build(self):

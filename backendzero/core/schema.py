@@ -71,12 +71,32 @@ class CreateProgressiveVisitMutation(DjangoCreateMutation):
         input['user'] = user.id
         return input
 
+class GetBmiMutation(graphene.Mutation):
+    class Arguments:
+        patient = graphene.ID()
+        weight = graphene.Float()
+
+    bmi = graphene.Float()
+
+    @permissions(is_logged)
+    def mutate(self, info, patient, weight):
+        user = info.context.user
+        patient = Patients.objects.filter(id=patient, user=user).first()
+        if not patient:
+            raise Exception("User not authorized")
+        height = patient.height
+
+        bmi = round(weight / (float((height / 100 )) ** 2), 2)
+
+        return GetBmiMutation(bmi=bmi)
+
 
 class Mutation(graphene.ObjectType):
     create_transaction = CreateTransactionMutation.Field()
     create_wallet = CreateWalletMutation.Field()
     create_patient = CreatePatientMutation.Field()
     create_progressive_visit = CreateProgressiveVisitMutation.Field()
+    get_bmi = GetBmiMutation.Field()
 
 
 class Query(graphene.ObjectType):
