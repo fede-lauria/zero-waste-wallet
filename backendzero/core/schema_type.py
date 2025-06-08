@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from core.models import User, Transaction, Currency
+from core.models import User, Transaction, Currency, Patients
 from core.models.wallet import Wallet
 
 
@@ -29,5 +29,9 @@ class CurrencyType(DjangoObjectType):
     class Meta:
         model = Currency
         fields = ['id', 'name', 'symbol']
+
+class PatientsType(DjangoObjectType):
+    class Meta:
+        model = Patients
 
 

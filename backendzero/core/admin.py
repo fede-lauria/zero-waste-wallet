@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Wallet, Transaction, User, Currency
+from core.models import Wallet, Transaction, User, Currency, Patients
 
 
 @admin.register(Wallet)
@@ -18,3 +18,7 @@ class TransactionAdmin(admin.ModelAdmin):
 class UserAdmin(admin.ModelAdmin):
     list_display = ['id', 'username', 'email', 'first_name', 'last_name', 'is_staff',
                     'date_joined']
+
+@admin.register(Patients)
+class UserAdmin(admin.ModelAdmin):
+    pass

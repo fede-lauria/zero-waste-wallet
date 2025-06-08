@@ -5,9 +5,9 @@ from django.db import models
 from graphene_django_cud.mutations import DjangoCreateMutation
 
 from core.mixins.auth_graphql import permissions, is_logged
-from core.models import Transaction, Currency
+from core.models import Transaction, Currency, Patients
 from core.models.wallet import Wallet
-from core.schema_type import WalletType, TransactionType, WalletsTotalBalanceType, CurrencyType
+from core.schema_type import WalletType, TransactionType, WalletsTotalBalanceType, CurrencyType, PatientsType
 
 
 class CreateTransactionMutation(DjangoCreateMutation):
@@ -45,10 +45,24 @@ class CreateWalletMutation(DjangoCreateMutation):
         input['user'] = user.id
         return input
 
+class CreatePatientMutation(DjangoCreateMutation):
+    class Meta:
+        model = Patients
+        login_required = True
+        exclude_fields = 'user'
+
+    @classmethod
+    @permissions(is_logged)
+    def before_mutate(self, root, info, input):
+        user = info.context.user
+        input['user'] = user.id
+        return input
+
 
 class Mutation(graphene.ObjectType):
     create_transaction = CreateTransactionMutation.Field()
     create_wallet = CreateWalletMutation.Field()
+    create_patient = CreatePatientMutation.Field()
 
 
 class Query(graphene.ObjectType):
@@ -59,6 +73,7 @@ class Query(graphene.ObjectType):
     transaction = graphene.Field(TransactionType, id=graphene.Int())
     transactions_by_wallet = graphene.List(TransactionType, id=graphene.Int())
     currency = graphene.List(CurrencyType)
+    patients = graphene.List(PatientsType)
 
     @permissions(is_logged)
     def resolve_wallets(self, info):
@@ -96,6 +111,10 @@ class Query(graphene.ObjectType):
     @permissions(is_logged)
     def resolve_currency(self, info):
         return Currency.objects.all()
+
+    def resolve_patients(self, info):
+        user = info.context.user
+        return Patients.objects.filter(user=user)
 
 
 
