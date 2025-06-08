@@ -53,7 +53,8 @@ class TestCreatePatientAPI(TestCase):
                               $weight: Decimal!
                               $date: Date!
                               $visitType: String!
-                              $pay: Boolean!
+                              $pay: Boolean!,
+                              $BMI: String!
                             ) {
                               createProgressiveVisit(
                                 input: {
@@ -61,10 +62,11 @@ class TestCreatePatientAPI(TestCase):
                                   weight: $weight,
                                   date: $date,
                                   visitType: $visitType,
-                                  pay: $pay
+                                  pay: $pay,
+                                  BMI: $BMI
                                 }
                               ) {
-                                progressiveVisit { id }
+                                progressiveVisit { id, BMI }
                               }
                             }'''
 
@@ -74,6 +76,7 @@ class TestCreatePatientAPI(TestCase):
             "date": "2025-03-13",
             "visitType": "Controllo",
             "pay": True,
+            "BMI": "29.4"
         })
 
         self.assertNotIn('errors', response)

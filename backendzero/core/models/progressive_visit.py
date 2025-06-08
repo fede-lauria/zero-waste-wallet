@@ -9,3 +9,4 @@ class ProgressiveVisit(models.Model):
     visit_type = models.CharField(max_length=100)
     pay = models.BooleanField(default=False)
     weight = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    BMI = models.CharField(max_length=10, blank=True, null=True)
