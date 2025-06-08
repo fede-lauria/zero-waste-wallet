@@ -1,3 +1,4 @@
+from dateutil.utils import today
 from django.db import models
 from core.models import User
 
@@ -11,7 +12,7 @@ class Patients(models.Model):
     date_of_birth = models.DateField()
     status = models.BooleanField(default=True)
     next_appointment = models.DateField(blank=True, null=True)
-    last_appointment = models.DateField()
+    last_appointment = models.DateField(default=today())
     height = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     weight = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
