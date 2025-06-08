@@ -102,7 +102,6 @@ class TestCreatePatientAPI(TestCase):
             "height": "170.00",
             "weight": "70.00"
         })
-        print(response)
 
         self.assertNotIn('errors', response)
         patient = response['data']['createPatient']['patients']
