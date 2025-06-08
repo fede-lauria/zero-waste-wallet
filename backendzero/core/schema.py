@@ -5,7 +5,7 @@ from django.db import models
 from graphene_django_cud.mutations import DjangoCreateMutation
 
 from core.mixins.auth_graphql import permissions, is_logged
-from core.models import Transaction, Currency, Patients
+from core.models import Transaction, Currency, Patients, ProgressiveVisit
 from core.models.wallet import Wallet
 from core.schema_type import WalletType, TransactionType, WalletsTotalBalanceType, CurrencyType, PatientsType
 
@@ -58,11 +58,25 @@ class CreatePatientMutation(DjangoCreateMutation):
         input['user'] = user.id
         return input
 
+class CreateProgressiveVisitMutation(DjangoCreateMutation):
+    class Meta:
+        model = ProgressiveVisit
+        login_required = True
+        exclude_fields = 'user'
+
+    @classmethod
+    @permissions(is_logged)
+    def before_mutate(self, root, info, input):
+        user = info.context.user
+        input['user'] = user.id
+        return input
+
 
 class Mutation(graphene.ObjectType):
     create_transaction = CreateTransactionMutation.Field()
     create_wallet = CreateWalletMutation.Field()
     create_patient = CreatePatientMutation.Field()
+    create_progressive_visit = CreateProgressiveVisitMutation.Field()
 
 
 class Query(graphene.ObjectType):

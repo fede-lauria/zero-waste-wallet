@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from core.models import User, Transaction, Currency, Patients
+from core.models import User, Transaction, Currency, Patients, ProgressiveVisit
 from core.models.wallet import Wallet
 
 
@@ -33,5 +33,9 @@ class CurrencyType(DjangoObjectType):
 class PatientsType(DjangoObjectType):
     class Meta:
         model = Patients
+
+class ProgressiveVisitType(DjangoObjectType):
+    class Meta:
+        model = ProgressiveVisit
 
 
