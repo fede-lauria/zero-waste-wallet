@@ -17,4 +17,6 @@ class ProgressiveVisit(models.Model):
 
         if self.patient and self.date:
             self.patient.last_appointment = self.date
+            self.patient.next_appointment = self.next_appointment
             self.patient.save(update_fields=['last_appointment'])
+            self.patient.save(update_fields=['next_appointment'])
