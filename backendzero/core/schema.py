@@ -7,7 +7,8 @@ from graphene_django_cud.mutations import DjangoCreateMutation
 from core.mixins.auth_graphql import permissions, is_logged
 from core.models import Transaction, Currency, Patients, ProgressiveVisit
 from core.models.wallet import Wallet
-from core.schema_type import WalletType, TransactionType, WalletsTotalBalanceType, CurrencyType, PatientsType
+from core.schema_type import WalletType, TransactionType, WalletsTotalBalanceType, CurrencyType, PatientsType, \
+    ProgressiveVisitType
 
 
 class CreateTransactionMutation(DjangoCreateMutation):
@@ -117,6 +118,7 @@ class Query(graphene.ObjectType):
     transactions_by_wallet = graphene.List(TransactionType, id=graphene.Int())
     currency = graphene.List(CurrencyType)
     patients = graphene.List(PatientsType)
+    progressive_visit_by_patient = graphene.List(ProgressiveVisitType, id=graphene.Int())
 
     @permissions(is_logged)
     def resolve_wallets(self, info):
@@ -129,6 +131,10 @@ class Query(graphene.ObjectType):
     def resolve_wallet(self, info, id):
         user = info.context.user
         return Wallet.objects.get(id=id, user=user)
+
+    def resolve_progressive_visit_by_patient(self, info, id):
+        user = info.context.user
+        return ProgressiveVisit.objects.filter(patient=id, user=user)
 
     @permissions(is_logged)
     def resolve_wallets_total_balance(self, info):
