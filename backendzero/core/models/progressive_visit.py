@@ -6,6 +6,7 @@ class ProgressiveVisit(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='user_progressive_visits')
     patient = models.ForeignKey('Patients', on_delete=models.CASCADE, related_name='patient_progressive_visits')
     date = models.DateField(default=today())
+    next_appointment = models.DateField(blank=True, null=True)
     visit_type = models.CharField(max_length=100)
     pay = models.BooleanField(default=False)
     weight = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)

@@ -51,7 +51,7 @@ class TestCreatePatientAPI(TestCase):
                             mutation createProgressiveVisit(
                               $patient: ID!
                               $weight: Decimal!
-                              $date: Date!
+                              $nextAppointment: Date!
                               $visitType: String!
                               $pay: Boolean!,
                               $BMI: String!
@@ -60,7 +60,7 @@ class TestCreatePatientAPI(TestCase):
                                 input: {
                                   patient: $patient,
                                   weight: $weight,
-                                  date: $date,
+                                  nextAppointment: $nextAppointment,
                                   visitType: $visitType,
                                   pay: $pay,
                                   BMI: $BMI
@@ -73,7 +73,7 @@ class TestCreatePatientAPI(TestCase):
         response = GraphQLClient(schema).execute(query, user, variables={
             "patient": patient.id,
             "weight": "70.00",
-            "date": "2025-03-13",
+            "nextAppointment": "2025-03-13",
             "visitType": "Controllo",
             "pay": True,
             "BMI": "29.4"

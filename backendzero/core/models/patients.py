@@ -13,6 +13,7 @@ class Patients(models.Model):
     status = models.BooleanField(default=True)
     next_appointment = models.DateField(blank=True, null=True)
     last_appointment = models.DateField(default=today())
+    first_appointment = models.DateField(default=today(), blank=True, null=True)
     height = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     weight = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
