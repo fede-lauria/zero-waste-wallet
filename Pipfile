@@ -11,6 +11,7 @@ django-cors-headers = "*"
 graphene-django = "*"
 model-bakery = "*"
 graphene-django-cud = "*"
+gunicorn = "*"
 
 [dev-packages]
 
